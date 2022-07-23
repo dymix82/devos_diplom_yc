@@ -90,12 +90,16 @@ mysql>
 ### 5. Установка WordPress
 ![img_4.png](img_4.png)
 ### 6. Установка Gitlab CE и Gitlab Runner
-
+Интерфейс Gitlab доступен по https.  
+В вашей доменной зоне настроена A-запись на внешний адрес reverse proxy:
+https://gitlab.gavva.site (Gitlab)
+![img_11.png](img_11.png)
+При любом коммите в репозиторий с WordPress и создании тега (например, v1.0.0) происходит деплой на виртуальную машину.
 ###  7. Установка Prometheus, Alert Manager, Node Exporter и Grafana
 1. На всех серверах установлен Node Exporter и его метрики доступны Prometheus
-![img_5.png](img_5.png)
+![img_10.png](img_10.png)
 2. У Alert Manager есть необходимый набор правил для создания алертов.
 ![img_6.png](img_6.png)
 ![img_8.png](img_8.png)
 3. В Grafana есть дашборд отображающий метрики из Node Exporter по всем серверам.
-![img_2.png](img_2.png)
+![img_9.png](img_9.png)
