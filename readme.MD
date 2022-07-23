@@ -96,6 +96,6 @@ mysql>
 ![img_5.png](img_5.png)
 2. У Alert Manager есть необходимый набор правил для создания алертов.
 ![img_6.png](img_6.png)
-
+![img_8.png](img_8.png)
 3. В Grafana есть дашборд отображающий метрики из Node Exporter по всем серверам.
 ![img_2.png](img_2.png)
