@@ -7,7 +7,8 @@
 ![img.png](img.png)
 
 ### 2. Создание инфраструктуры
-Описание инфраструктуры как код создано и выложено в git репозиторий  
+Описание инфраструктуры как код создано и выложено в git репозиторий   
+  https://github.com/dymix82/devops_diploma_iac   
 В качестве backend используется S3 Yandex storage:  
 ![img_12.png](img_12.png)
 ### 3. Установка Nginx и LetsEncrypt
@@ -99,7 +100,8 @@ https://gitlab.gavva.site (Gitlab)
 ![img_11.png](img_11.png)
   
 При любом коммите в репозиторий с WordPress и создании тега (например, v1.0.0) происходит деплой на виртуальную машину.  
-Для настройки gitlab-runner используется отдельный playbook
+Для настройки gitlab-runner используется отдельный playbook  
+https://github.com/dymix82/devops_diploma_iac/tree/main/gitrunner-playbook  
 Создаем проект в Гитлаб и заливаем в него содержимое папки /var/www/gavva.site/wordpress
 ![img_17.png](img_17.png)
 
