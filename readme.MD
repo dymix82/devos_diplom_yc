@@ -7,13 +7,16 @@
 ![img.png](img.png)
 
 ### 2. Создание инфраструктуры
-Описание инфраструктуры как код создано и выложено в git репозиторий
+Описание инфраструктуры как код создано и выложено в git репозиторий  
+В качестве backend используется S3 Yandex storage:  
+![img_12.png](img_12.png)
 ### 3. Установка Nginx и LetsEncrypt
 1. Настроены все A-записи на внешний адрес этого сервера:  
 ![img_3.png](img_3.png)
 2. Настроены все upstream для выше указанных URL
 3. При разворачивании инфраструктуры автоматически создается сертификат:    
 ![img_7.png](img_7.png)
+4. Стейджинг сертификатов задается переменной letsencrypt_staging: true/false
 ### 4. Установка кластера MySQL
 1. MySQL работает в режиме репликации Master/Slave.
 2. В кластере автоматически создаётся база данных c именем wordpress.
@@ -94,7 +97,41 @@ mysql>
 В вашей доменной зоне настроена A-запись на внешний адрес reverse proxy:
 https://gitlab.gavva.site (Gitlab)
 ![img_11.png](img_11.png)
+
 При любом коммите в репозиторий с WordPress и создании тега (например, v1.0.0) происходит деплой на виртуальную машину.
+Для настройки gitlab-runner используется отдельный playbook
+Создаем проект в Гитлаб и заливаем в него содержимое папки /var/www/gavva.site/wordpress
+![img_17.png](img_17.png)
+
+Cоздаем файлик test.txt
+![img_16.png](img_16.png)
+Файлик появляется  
+![img_15.png](img_15.png)  
+Без создания тега:  
+![img_14.png](img_14.png)  
+При создании тега:  
+![img_13.png](img_13.png)  
+Текст .gitlab-ci.yml
+```yaml
+stages:          # List of stages for jobs, and their order of execution
+  - deploy
+
+deploy-job:
+  stage: deploy
+  script:
+    - echo "Some changes in repo detected..."
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add
+    - if [ "$CI_COMMIT_TAG" = "" ] ; then echo "No tag - no deploy!";
+      else cd ~/wp && rm -rf wordpress && git clone -b master git@gitlab.gavva.site:gitlab-instance-77f2ac07/wordpress.git; 
+      bash ~/deploy.sh;
+      fi
+    - echo "The End"
+
+```
+Текст скрипта по deploy.sh
+```bash
+```
 ###  7. Установка Prometheus, Alert Manager, Node Exporter и Grafana
 1. На всех серверах установлен Node Exporter и его метрики доступны Prometheus
 ![img_10.png](img_10.png)
